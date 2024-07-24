@@ -51,10 +51,26 @@ function pago (metodo){
 // compara el cuadro que se ingresa en el prompt con los existentes
 function comparaArray (nuevoCuadro) {
     let comparaString = false
+    let cuadroRepetido = false
     if(!isNaN(nuevoCuadro)&&Number(nuevoCuadro)<=4&&Number(nuevoCuadro)>0){
         comparaString = true
         nuevoCuadro = cuadrosDisponibles[nuevoCuadro-1]
+        //chequea que el nuevo cuadro no haya sido agregado anteriormente al carrito (imput numerico)
+        for(let a=0;a<carrito.length&&!cuadroRepetido;a++){
+            if(nuevoCuadro.toLowerCase() == carrito[a]){
+                cuadroRepetido=true
+                console.log(cuadroRepetido)
+            }
+        }
     }else{
+        //chequea que el nuevo cuadro no haya sido agregado anteriormente al carrito (imput string)
+        for(let a=0;a<carrito.length&&!cuadroRepetido;a++){
+            if(nuevoCuadro.toLowerCase() == carrito[a]){
+                cuadroRepetido=true
+                console.log(cuadroRepetido)
+            }
+        }
+        //chequea que el cuadro exista
         for(let y=0;y<cuadrosDisponibles.length&&comparaString===false;y++){
             if(nuevoCuadro.toLowerCase() == cuadrosDisponibles[y]){
                 comparaString=true
@@ -62,7 +78,8 @@ function comparaArray (nuevoCuadro) {
             }
         }
     }
-    return [comparaString, nuevoCuadro.toLowerCase()]
+
+    return [comparaString, nuevoCuadro.toLowerCase(), cuadroRepetido]
 }
 
 //suma de precios
@@ -78,10 +95,13 @@ for(let i=0;exit!=false;i++){
     nuevoCuadro = prompt("que cuadro desea agregar? \n 1- Happier than ever \n 2- Across the spiderverse \n 3- Currents \n 4- To pimp a butterfly")
     console.log(nuevoCuadro)
     respuesta = comparaArray(nuevoCuadro)
-    if(respuesta[0]){
+    if(respuesta[0]&&!respuesta[2]){
         carrito[i] = respuesta[1]
         console.log(carrito)
         sumaPrecios(Number(precios[i]))
+    }else if(respuesta[2]){
+        alert("este cuadro ya fue agregado al carrito, seleccione otro")
+        i=i-1
     }else{
         alert("este cuadro no existe")
         i = i-1
@@ -98,7 +118,7 @@ if(!exit){
     let pagoRealizado = false
     let respuestaPago
     while(!pagoRealizado){
-        metodo = prompt("con que método de pago desea abonar? \n 1- transferencia \n 2- mercado pago \n 3- efectivo \n 4- débito \n 5- crédito")
+        metodo = prompt("con que método de pago desea abonar? \n 1- transferencia (-15%) \n 2- mercado pago \n 3- efectivo (-15%) \n 4- débito \n 5- crédito (+15%)")
         console.log(metodo)
         respuestaPago = pago(metodo)
         if(respuestaPago[0]===true){
@@ -110,8 +130,9 @@ if(!exit){
                 let numeroRespuestaPago = Number(metodo)
                 console.log(numeroRespuestaPago)
                 metodo = metodosPago[numeroRespuestaPago-1]
+                console.log(metodo)
             }
-            if(confirm("usted se encuentra por abonar " + respuestaPago[1] + " por el siguiente medio de pago: " + metodo)){
+            if(confirm("usted se encuentra por abonar: " + respuestaPago[1] + "\npor el siguiente medio de pago: " + metodo)){
                 alert("compra realizada con exito!")
             }else{
                 if(confirm("desea retirarse sin completar su pedido?")){
