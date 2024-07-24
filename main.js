@@ -92,7 +92,7 @@ function sumaPrecios (cuadro){
 let respuesta
 let metodo
 for(let i=0;exit!=false;i++){
-    nuevoCuadro = prompt("que cuadro desea agregar? \n 1- Happier than ever \n 2- Across the spiderverse \n 3- Currents \n 4- To pimp a butterfly")
+    nuevoCuadro = prompt("¿Que cuadro desea agregar? \n\n 1- Happier than ever \n 2- Across the spiderverse \n 3- Currents \n 4- To pimp a butterfly")
     console.log(nuevoCuadro)
     respuesta = comparaArray(nuevoCuadro)
     if(respuesta[0]&&!respuesta[2]){
@@ -100,25 +100,25 @@ for(let i=0;exit!=false;i++){
         console.log(carrito)
         sumaPrecios(Number(precios[i]))
     }else if(respuesta[2]){
-        alert("este cuadro ya fue agregado al carrito, seleccione otro")
+        alert("Este cuadro ya fue agregado al carrito, seleccione otro.")
         i=i-1
     }else{
-        alert("este cuadro no existe")
+        alert("Este cuadro no existe.")
         i = i-1
     }
-    exit = confirm("quiere seguir comprando?")
+    exit = confirm("¿Quiere seguir comprando?")
     console.log(exit)
 }
 // alert de los contenidos del carrito
 alert("Su carrito contiene los cuadros: \n\n" + "- " + carrito.join("\n- "))
 // alert del total del carrito
-alert("total hasta ahora: " + total)
+alert("Total hasta ahora: " + total)
 // pago
 if(!exit){
     let pagoRealizado = false
     let respuestaPago
     while(!pagoRealizado){
-        metodo = prompt("con que método de pago desea abonar? \n 1- transferencia (-15%) \n 2- mercado pago \n 3- efectivo (-15%) \n 4- débito \n 5- crédito (+15%)")
+        metodo = prompt("¿Con que método de pago desea abonar? \n\n 1- transferencia (-15%) \n 2- mercado pago \n 3- efectivo (-15%) \n 4- débito \n 5- crédito (+15%)")
         console.log(metodo)
         respuestaPago = pago(metodo)
         if(respuestaPago[0]===true){
@@ -132,23 +132,23 @@ if(!exit){
                 metodo = metodosPago[numeroRespuestaPago-1]
                 console.log(metodo)
             }
-            if(confirm("usted se encuentra por abonar: " + respuestaPago[1] + "\npor el siguiente medio de pago: " + metodo)){
-                alert("compra realizada con exito!")
+            if(confirm("Usted se encuentra por abonar: " + respuestaPago[1] + "\nPor el siguiente medio de pago: " + metodo)){
+                alert("Compra realizada con exito!")
             }else{
-                if(confirm("desea retirarse sin completar su pedido?")){
+                if(confirm("¿Desea retirarse sin completar su pedido?")){
                     //el pago no esta realizado pero se activa para salir del while
                     pagoRealizado=true
                 }else{
-                    alert("debe ingresar un metodo de pago")
+                    alert("Debe ingresar un metodo de pago")
                     pagoRealizado=false
                 }
             }
         }else{
-            if(confirm("desea retirarse sin completar su pedido?")){
+            if(confirm("¿Desea retirarse sin completar su pedido?")){
                 pagoRealizado=true
             }else{
                 //el pago no esta realizado pero se activa para salir del while
-                alert("debe ingresar un metodo de pago")
+                alert("Debe ingresar un metodo de pago")
             }
         }
     }
